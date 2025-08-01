@@ -18,7 +18,7 @@ spec:
       serviceAccountName: ethereum-signer
       containers:
         - name: eth-kms-signer
-          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:0700619c84fc02766f07db59e87d178ea5b13bea-4
+          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:8fc2d4a6224147f47169c4e686a901b969b9b10c-5
           imagePullPolicy: Always
           env:
             - name: KMS_KEY_ID
