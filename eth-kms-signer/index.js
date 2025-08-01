@@ -1,10 +1,9 @@
-import { AwsKmsSigner } from 'eth-signer-kms';
-import { ethers } from 'ethers';
-import * as dotenv from 'dotenv';
+require('dotenv').config();
 
-dotenv.config();
+const { AwsKmsSigner } = require('eth-signer-kms');
+const { ethers } = require('ethers');
 
-const main = async () => {
+async function main() {
   const provider = new ethers.JsonRpcProvider(process.env.ETH_RPC_URL);
   const signer = new AwsKmsSigner({
     keyId: process.env.KMS_KEY_ID,
@@ -12,19 +11,17 @@ const main = async () => {
     provider,
   });
 
-  const from = await signer.getAddress();
-  console.log("From address:", from);
+  const address = await signer.getAddress();
+  console.log("Using address:", address);
 
   const tx = await signer.sendTransaction({
     to: process.env.ETH_TXN_RECPIENT,
     value: ethers.parseEther("0.01"),
   });
 
-  console.log("Sent tx:", tx.hash);
+  console.log("TX sent:", tx.hash);
   await tx.wait();
-
-  console.log("Confirmed.");
-};
+  console.log("TX confirmed.");
+}
 
 main().catch(console.error);
- 
