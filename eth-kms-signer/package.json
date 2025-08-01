@@ -1,0 +1,14 @@
+{
+  "name": "eth-kms-signer",
+  "version": "1.0.0",
+  "description": "Ethereum signer using AWS KMS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "eth-signer-kms": "^1.2.2",
+    "ethers": "^6.9.0",
+    "dotenv": "^16.3.1"
+  }
+}
