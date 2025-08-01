@@ -1,6 +1,7 @@
 name: Build and Push eth-kms-signer to ECR
 
 on:
+  workflow_dispatch: {}
   push:
     branches:
       - main
