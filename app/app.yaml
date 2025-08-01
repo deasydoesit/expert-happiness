@@ -18,7 +18,7 @@ spec:
       serviceAccountName: ethereum-signer
       containers:
         - name: eth-kms-signer
-          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:8fc2d4a6224147f47169c4e686a901b969b9b10c-5
+          image: b6075e583969058da65b8bfb4bd2b84ba14179af-6
           imagePullPolicy: Always
           env:
             - name: KMS_KEY_ID
@@ -26,4 +26,4 @@ spec:
             - name: AWS_REGION
               value: us-east-1
             - name: ETH_RPC_URL
-              value: https://rpc.ankr.com/eth_sepolia
+              value: https://sepolia.drpc.org
