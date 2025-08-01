@@ -1,0 +1,32 @@
+projects:
+  expert-happiness:
+    namespace: secure
+    description: 'Expert Happiness'
+    sourceRepos:
+    - '*'
+    destinations:
+    - name: '*'
+      namespace: 'secure'
+      server: '*'
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+applications:
+  expert-happiness:
+    namespace: secure
+    project: expert-happiness
+    source:
+      repoURL: <add_me_in_helm_release>
+      targetRevision: HEAD
+      path: expert-happiness
+      helm:
+        valueFiles:
+          - values.yaml
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: secure
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
