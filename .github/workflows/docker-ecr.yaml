@@ -16,7 +16,9 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    env:
+      docker_tag: >-
+        ${{ format('{0}-{1}', github.sha, github.run_number) }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -33,7 +35,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        IMAGE_TAG=${ECR_REGISTRY}/${ECR_REPOSITORY}:latest
+        IMAGE_TAG=${ECR_REGISTRY}/${ECR_REPOSITORY}:${{ env.docker_tag }}
         docker build -t $IMAGE_TAG ./${APP_DIR}
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
