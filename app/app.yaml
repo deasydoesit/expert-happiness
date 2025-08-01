@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ethereum-app
+  name: eth-kms-signer
   namespace: ethereum
   labels:
-    app: ethereum-app
+    app: eth-kms-signer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ethereum-app
+      app: eth-kms-signer
   template:
     metadata:
       labels:
-        app: ethereum-app
+        app: eth-kms-signer
     spec:
+      serviceAccountName: ethereum-signer
       containers:
-      - name: ethereum-app
-        image: nginx:1.24-alpine
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "50m"
-          limits:
-            memory: "128Mi"
-            cpu: "100m"
+        - name: eth-kms-signer
+          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:0700619c84fc02766f07db59e87d178ea5b13bea-4
+          imagePullPolicy: Always
+          env:
+            - name: KMS_KEY_ID
+              value: 785b7304-5e27-439c-b2ae-971392db5ec2
+            - name: AWS_REGION
+              value: us-east-1
+            - name: ETH_RPC_URL
+              value: https://rpc.ankr.com/eth_sepolia
