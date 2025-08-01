@@ -17,9 +17,9 @@ variable "availability_zones" {
 # VPC
 # ***************************************
 variable "vpc_name" {
-  description = "The name of the VPC. Defaults to chirpstack-vpc."
+  description = "The name of the VPC. Defaults to vpc."
   type        = string
-  default     = "chirpstack-vpc"
+  default     = "vpc"
 }
 
 variable "vpc_cidr_block" {

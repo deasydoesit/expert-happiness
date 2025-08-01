@@ -75,21 +75,6 @@ variable "cluster_autoscaler_chart_version" {
 }
 
 # ***************************************
-#  External Secrets
-# ***************************************
-variable "external_secrets_chart_version" {
-  description = "Version of External Secretes Helm chart"
-  type        = string
-  default     = ""
-}
-
-variable "deploy_externa_secrets_crd" {
-  description = "Deploy External Secrets ClusterSecretStore?"
-  type        = bool
-  default     = false
-}
-
-# ***************************************
 #  Metrics Server
 # ***************************************
 variable "metrics_server_chart_version" {
@@ -156,7 +141,7 @@ variable "eks_aws_auth_accounts" {
 variable "eth_signer_service_account_namespace" {
   description = "K8s namespace for ethereum signer pod"
   type        = string
-  default     = "secure"
+  default     = "ethereum"
 }
 
 variable "eth_signer_service_account_name" {

@@ -1,12 +1,12 @@
 projects:
   expert-happiness:
-    namespace: secure
+    namespace: ethereum
     description: 'Expert Happiness'
     sourceRepos:
     - '*'
     destinations:
     - name: '*'
-      namespace: 'secure'
+      namespace: 'ethereum'
       server: '*'
     clusterResourceWhitelist:
     - group: '*'
@@ -14,7 +14,7 @@ projects:
 
 applications:
   expert-happiness:
-    namespace: secure
+    namespace: ethereum
     project: expert-happiness
     source:
       repoURL: <add_me_in_helm_release>
@@ -25,7 +25,7 @@ applications:
           - values.yaml
     destination:
       server: https://kubernetes.default.svc
-      namespace: secure
+      namespace: ethereum
     syncPolicy:
       automated:
         prune: true

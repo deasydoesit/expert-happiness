@@ -291,7 +291,8 @@ data "aws_iam_policy_document" "lbc_policy" {
       "elasticloadbalancing:ModifyListener",
       "elasticloadbalancing:AddListenerCertificates",
       "elasticloadbalancing:RemoveListenerCertificates",
-      "elasticloadbalancing:ModifyRule"
+      "elasticloadbalancing:ModifyRule",
+      "elasticloadbalancing:DescribeListenerAttributes"
     ]
     resources = ["*"]
   }
@@ -458,64 +459,6 @@ resource "aws_iam_policy" "cluster_autoscaler_iam_policy" {
 resource "aws_iam_role_policy_attachment" "cluster_autoscaler_policy_attachement" {
   role       = aws_iam_role.cluster_autoscaler_role.name
   policy_arn = aws_iam_policy.cluster_autoscaler_iam_policy.arn
-}
-
-# ***************************************
-# External Secrets
-# ***************************************
-data "aws_iam_policy_document" "external_secrets_assume_role_policy" {
-  version = "2012-10-17"
-
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Federated"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${var.oidc_provider}"]
-    }
-
-    actions = ["sts:AssumeRoleWithWebIdentity"]
-
-    condition {
-      test     = "StringEquals"
-      variable = "${var.oidc_provider}:sub"
-      values   = ["system:serviceaccount:kube-system:external-secrets"]
-    }
-  }
-}
-
-data "aws_iam_policy_document" "external_secrets_policy" {
-  version = "2012-10-17"
-
-  statement {
-    effect = "Allow"
-    actions = [
-      "secretsmanager:GetResourcePolicy",
-      "secretsmanager:GetSecretValue",
-      "secretsmanager:DescribeSecret",
-      "secretsmanager:ListSecretVersionIds"
-    ]
-    resources = ["arn:aws:secretsmanager:${var.aws_region}:${data.aws_caller_identity.current.account_id}:secret:expert-happiness/*"]
-  }
-}
-
-resource "aws_iam_role" "external_secrets_role" {
-  name        = "external-secrets-role"
-  description = "IAM Role used by External Secrets operating in the EKS cluster"
-
-  assume_role_policy = data.aws_iam_policy_document.external_secrets_assume_role_policy.json
-}
-
-resource "aws_iam_policy" "external_secrets_iam_policy" {
-  name        = "external-secrets-policy"
-  description = "IAM policy used by the external-secrets-role operating in the EKS cluster"
-
-  policy = data.aws_iam_policy_document.external_secrets_policy.json
-}
-
-resource "aws_iam_role_policy_attachment" "external_secrets_policy_attachement" {
-  role       = aws_iam_role.external_secrets_role.name
-  policy_arn = aws_iam_policy.external_secrets_iam_policy.arn
 }
 
 # ***************************************

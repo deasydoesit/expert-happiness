@@ -15,15 +15,6 @@ resource "time_sleep" "apps" {
   create_duration = "300s"
 }
 
-resource "time_sleep" "external_secrets" {
-
-  depends_on = [
-    helm_release.external_secrets
-  ]
-
-  create_duration = "300s"
-}
-
 # ***************************************
 #  Argo CD
 # ***************************************
@@ -253,7 +244,7 @@ resource "helm_release" "cluster_autoscaler" {
 #  Metrics Server
 # ***************************************
 resource "helm_release" "metrics_server" {
-  repository = "oci://registry-1.docker.io/bitnamicharts"
+  repository = "https://kubernetes-sigs.github.io/metrics-server/"
   chart      = "metrics-server"
   version    = var.metrics_server_chart_version
 
@@ -268,72 +259,6 @@ resource "helm_release" "metrics_server" {
 
   depends_on = [
     time_sleep.this
-  ]
-}
-
-# ***************************************
-#  External Secrets
-# ***************************************
-data "aws_eks_cluster" "cluster" {
-  name = var.eks_cluster_name
-}
-
-data "aws_iam_role" "external_secrets_role" {
-  name = "external-secrets-role"
-}
-
-resource "helm_release" "external_secrets" {
-  repository = "https://charts.external-secrets.io"
-  chart      = "external-secrets"
-  version    = var.external_secrets_chart_version
-
-  name            = "external-secrets"
-  namespace       = "kube-system"
-  cleanup_on_fail = true
-
-  set {
-    name  = "clusterEndpoint"
-    value = data.aws_eks_cluster.cluster.endpoint
-  }
-
-  set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = data.aws_iam_role.external_secrets_role.arn
-  }
-
-  values = [
-    file("${path.module}/config/external-secrets-values.yaml")
-  ]
-
-  depends_on = [
-    time_sleep.this
-  ]
-}
-
-resource "kubernetes_manifest" "external_secrets" {
-  count = var.deploy_externa_secrets_crd ? 1 : 0
-
-  manifest = yamldecode(<<-EOF
-    apiVersion: external-secrets.io/v1beta1
-    kind: ClusterSecretStore
-    metadata:
-      name: external-secrets
-    spec:
-      provider:
-        aws:
-          service: SecretsManager
-          region: ${var.aws_region}
-          auth:
-            jwt:
-              serviceAccountRef:
-                name: external-secrets
-                namespace: kube-system
-    EOF
-  )
-
-  depends_on = [
-    time_sleep.this,
-    time_sleep.external_secrets,
   ]
 }
 
@@ -517,10 +442,10 @@ resource "kubernetes_storage_class" "gp3_default" {
   allow_volume_expansion = true
 
   parameters = {
-    type      = "gp3"
-    fsType    = "ext4"
-    encrypted = "true"
-    iops       = "3000" 
-    throughput = "125" 
+    type       = "gp3"
+    fsType     = "ext4"
+    encrypted  = "true"
+    iops       = "3000"
+    throughput = "125"
   }
 }

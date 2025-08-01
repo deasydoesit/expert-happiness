@@ -300,7 +300,7 @@ variable "kms_eth_tags" {
 variable "eth_signer_service_account_namespace" {
   description = "K8s namespace for ethereum signer pod"
   type        = string
-  default     = "secure"
+  default     = "ethereum"
 }
 
 variable "eth_signer_service_account_name" {
