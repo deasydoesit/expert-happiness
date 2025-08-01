@@ -22,8 +22,9 @@ const main = async () => {
 
   console.log("Sent tx:", tx.hash);
   await tx.wait();
-  
+
   console.log("Confirmed.");
 };
 
 main().catch(console.error);
+ 
