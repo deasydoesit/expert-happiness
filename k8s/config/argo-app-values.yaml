@@ -1,7 +1,7 @@
 projects:
-  expert-happiness:
-    namespace: ethereum
-    description: 'Expert Happiness'
+  ethereum:
+    namespace: argocd
+    description: 'KMS Ethereum Signer'
     sourceRepos:
     - '*'
     destinations:
@@ -11,18 +11,15 @@ projects:
     clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-
+ 
 applications:
-  expert-happiness:
-    namespace: ethereum
-    project: expert-happiness
+  ethereum:
+    namespace: argocd
+    project: ethereum
     source:
       repoURL: <add_me_in_helm_release>
       targetRevision: HEAD
-      path: expert-happiness
-      helm:
-        valueFiles:
-          - values.yaml
+      path: app
     destination:
       server: https://kubernetes.default.svc
       namespace: ethereum

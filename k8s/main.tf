@@ -85,7 +85,7 @@ resource "helm_release" "argocd_apps" {
   namespace = "argocd"
 
   set {
-    name  = "applications.expert-happiness.source.repoURL"
+    name  = "applications.ethereum.source.repoURL"
     value = var.repo_url
   }
 
