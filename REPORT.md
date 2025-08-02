@@ -12,4 +12,5 @@ In furtherance of `2`, the `aws_kms_grant` resource was used to tightly couple k
 
 Other notes:
 - The public REST API around the keypair transfer function was created solely for your ability to experiment with my work product. Goes without saying this is abhorrent for mainnet / production workloads.
-- Grafana is wired up to Prometheus for cluster observation but no dashboards or anything were created.
+- [Grafana](https://grafana.expert-happiness.com) is wired up to Prometheus for cluster observation but no dashboards or anything were created. Credentials are provided in the email. Again, this is just for you to poke around, truly abohorrent from a security perpective otherwise.
+- [Argo](https://argo.expert-happiness.com/) is configured for CI/CD. Credentials are provided in the email. Similarly horrendous, but you can watch application logs as requests come through.
