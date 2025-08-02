@@ -24,7 +24,7 @@ The Sepolia faucet-like application exposes two REST endpoints at the app.expert
 
 ## Architecture
 
-![AWS Architecture Diagram](../static/expert-happiness.png)
+![AWS Architecture Diagram](./static/expert-happiness.png)
 
 As shown in the AWS architecture diagram above, there is a two-tier VPC structure with EKS operating in private subnets in support of the Sepolia faucet-like application. The application is exposed by an Application Load Balancer with domain defined in Route53 and SSL certificate managed in ACM. In addition to the application, provided at `https://app.expert-happiness.com`, the load balancer also provides ingress for Argo and Grafana consoles e.g., `https://argo.expert-happiness.com` and `https://grafana.expert-happiness.com`.
 
