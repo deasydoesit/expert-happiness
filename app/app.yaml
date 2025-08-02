@@ -24,7 +24,45 @@ spec:
               value: 785b7304-5e27-439c-b2ae-971392db5ec2
             - name: AWS_REGION
               value: us-east-1
-            - name: ETH_TXN_RECPIENT
-              value: '0x16406c22b24Cd6e8f73DbdD131be89402796190D'
             - name: ETH_RPC_URL
               value: https://sepolia.drpc.org
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eth-kms-signer
+  labels:
+    app: eth-kms-signer
+spec:
+  selector:
+    app: eth-kms-signer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eth-kms-signer
+  annotations:
+    alb.ingress.kubernetes.io/group.name: expert-happiness
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+spec:
+  ingressClassName: alb
+  rules:
+    - host: app.expert-happiness.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: eth-kms-signer
+                port:
+                  number: 80
