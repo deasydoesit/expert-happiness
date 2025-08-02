@@ -1,0 +1,15 @@
+# Report
+
+In the crypto industry, security is paramount. A security incident can lead to tremendous reputational harm, if not financial ruin for the company and community. Failure simply cannot occur.
+
+As such, the crux of the task boiled down to:
+1. Securely creating an AWS KMS keypair for Ethereum
+2. Maximizing security posture around the KMS keypair
+
+In furtherance of `1`, the interesting pieces are found in the [`kms_eth` Terraform module](https://github.com/deasydoesit/expert-happiness/tree/main/aws/modules/kms_eth). There, the KMS key is created via the `aws_kms_key` Terraform resource with inline `policy` defintion that generally aligns with [suggested AWS practices](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html) in creating a default policy for the keypair and allowing a defined administrator (e.g., in our case active AWS terraform deployer) to manage the keypair. For the latter, I would experiment further with separating the AWS terraform deployer from the keypair administrator for a different, more restrictive IAM role. The role's assumption could be tied in to CloudWatch / CloudTrail alerting to ensure nobody accesses the keypair unbeknownst. This could probably be taken even further by creating a separate AWS account configured for keypair administration purposes, but not in scope for this assignment. Also probably worth reviewing the exact permissions given to the keypair administrator. 
+
+In furtherance of `2`, the `aws_kms_grant` resource was used to tightly couple key usage of the immediate key to the K8s ServiceAccount and IAM role associated with the `eth-kms-signer` pod deployed into the cluster. Through IRSA, only the K8s ServiceAccount in the proper Namespace with assocaited IAM role can use the KMS keypair. In practice, this yields a compelling security posture. For example, the IAM role governing access to the keypair isn't applied on the node level, meaning only pods in the proper namespace with the proper serviceaccount association can access the keypair. Additionally, the `eth-kms-signer` pods can be scheduled on single-purpose nodes without any pod commingling and can leverage a high degree of ephemerality to ensure security patches are applied. It should also be noted that in the `aws_kms_grant` definition, the keypair ARN is the only keypair the `eth-kms-signer` role can use, meaning that if other keypairs are created for other purposes, the `eth-kms-signer` role won't have access. In this way, a high degree of security segmentation is achieved in the cluster execution space.
+
+Other notes:
+- The public REST API around the keypair transfer function was created solely for your ability to experiment with my work product. Goes without saying this is abhorrent for mainnet / production workloads.
+- Grafana is wired up to Prometheus for cluster observation but no dashboards or anything were created.
