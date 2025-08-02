@@ -65,7 +65,8 @@ data "aws_iam_policy_document" "lbc_policy" {
       "elasticloadbalancing:DescribeTargetGroupAttributes",
       "elasticloadbalancing:DescribeTargetHealth",
       "elasticloadbalancing:DescribeTags",
-      "elasticloadbalancing:DescribeTrustStores"
+      "elasticloadbalancing:DescribeTrustStores",
+      "elasticloadbalancing:SetRulePriorities"
     ]
     resources = ["*"]
   }
@@ -239,7 +240,8 @@ data "aws_iam_policy_document" "lbc_policy" {
       "elasticloadbalancing:DeleteLoadBalancer",
       "elasticloadbalancing:ModifyTargetGroup",
       "elasticloadbalancing:ModifyTargetGroupAttributes",
-      "elasticloadbalancing:DeleteTargetGroup"
+      "elasticloadbalancing:DeleteTargetGroup",
+      "elasticloadbalancing:SetRulePriorities"
     ]
     resources = ["*"]
 
@@ -292,7 +294,8 @@ data "aws_iam_policy_document" "lbc_policy" {
       "elasticloadbalancing:AddListenerCertificates",
       "elasticloadbalancing:RemoveListenerCertificates",
       "elasticloadbalancing:ModifyRule",
-      "elasticloadbalancing:DescribeListenerAttributes"
+      "elasticloadbalancing:DescribeListenerAttributes",
+      "elasticloadbalancing:SetRulePriorities"
     ]
     resources = ["*"]
   }
