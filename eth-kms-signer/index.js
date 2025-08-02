@@ -15,7 +15,7 @@ async function main() {
 
   const tx = await signer.sendTransaction({
     to: process.env.ETH_TXN_RECPIENT,
-    value: ethers.parseEther("0.01"),
+    value: ethers.parseEther("0.0001"),
   });
 
   console.log("TX sent:", tx.hash);

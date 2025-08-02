@@ -24,5 +24,7 @@ spec:
               value: 785b7304-5e27-439c-b2ae-971392db5ec2
             - name: AWS_REGION
               value: us-east-1
+            - name: ETH_TXN_RECPIENT
+              value: '0x16406c22b24Cd6e8f73DbdD131be89402796190D'
             - name: ETH_RPC_URL
               value: https://sepolia.drpc.org
