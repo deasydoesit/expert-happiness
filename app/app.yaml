@@ -18,7 +18,7 @@ spec:
       serviceAccountName: ethereum-signer
       containers:
         - name: eth-kms-signer
-          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:a3117e4b70828df6a2769c9337d89219a2aa289a-8
+          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:b16885b59848de982f5a44b51f57f61246ea08fd-9
           env:
             - name: KMS_KEY_ID
               value: 785b7304-5e27-439c-b2ae-971392db5ec2
@@ -66,3 +66,25 @@ spec:
                 name: eth-kms-signer
                 port:
                   number: 80
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: eth-kms-signer
+  namespace: ethereum
+  labels:
+    app: eth-kms-signer
+    component: metrics
+spec:
+  selector:
+    matchLabels:
+      app: eth-kms-signer
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+      scrapeTimeout: 10s
+      honorLabels: true
+  namespaceSelector:
+    matchNames:
+      - ethereum      
