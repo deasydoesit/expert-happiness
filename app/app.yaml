@@ -5,6 +5,9 @@ metadata:
   namespace: ethereum
   labels:
     app: eth-kms-signer
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3000"
 spec:
   replicas: 1
   selector:
@@ -14,9 +17,6 @@ spec:
     metadata:
       labels:
         app: eth-kms-signer
-    annotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/port: "3000"
     spec:
       serviceAccountName: ethereum-signer
       containers:
