@@ -26,7 +26,7 @@ resource "random_password" "argo" {
 }
 
 resource "aws_secretsmanager_secret" "argo" {
-  name        = "root/argocd-admin-credentials-3"
+  name        = "root/argocd-admin-credentials-4"
   description = "Credentials for ArgoCD admin user"
 }
 
@@ -304,7 +304,7 @@ resource "random_password" "grafana" {
 resource "aws_secretsmanager_secret" "grafana" {
   count = var.with_grafana ? 1 : 0
 
-  name        = "root/grafana-admin-credentials-3"
+  name        = "root/grafana-admin-credentials-4"
   description = "Credentials for Grafana admin user"
 }
 
