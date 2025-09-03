@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-kms": "^3.859.0",
+    "@fastify/static": "^8.2.0",
     "@rumblefishdev/eth-signer-kms": "^4.0.0",
     "dotenv": "^16.3.1",
     "ethers": "^6.9.0",
