@@ -68,17 +68,4 @@ spec:
               service:
                 name: eth-kms-signer
                 port:
-                  number: 80
-
-  selector:
-    matchLabels:
-      app: eth-kms-signer
-  endpoints:
-    - port: http
-      path: /metrics
-      interval: 15s
-      scrapeTimeout: 10s
-      honorLabels: true
-  namespaceSelector:
-    matchNames:
-      - ethereum      
+                  number: 80   
