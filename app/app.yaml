@@ -24,7 +24,7 @@ spec:
           image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:852576ecf58889ecf65a83c0a3600a02b39266a0-13
           env:
             - name: KMS_KEY_ID
-              value: arn:aws:kms:us-east-1:104275290258:key/cf91e798-b459-4267-8f07-21aab431d5aa
+              value: arn:aws:kms:us-east-1:104275290258:key/a618de64-ee18-4032-92ce-8abe8898f348
             - name: AWS_REGION
               value: us-east-1
             - name: ETH_RPC_URL
