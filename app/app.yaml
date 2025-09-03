@@ -28,7 +28,7 @@ spec:
             - name: AWS_REGION
               value: us-east-1
             - name: ETH_AMOUNT
-              value: '0.01'
+              value: '0.0001'
             - name: ETH_RPC_URL
               value: https://sepolia.drpc.org
 ---
