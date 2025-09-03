@@ -57,3 +57,27 @@ variable "oidc_provider" {
   type        = string
   default     = ""
 }
+
+variable "for_key_creater_account" {
+  description = "Is the module used in key creater account?"
+  type        = bool
+  default     = false
+}
+
+variable "for_key_user_account" {
+  description = "Is the module used in key user account?"
+  type        = bool
+  default     = false
+}
+
+variable "kms_arn" {
+  description = "ARN of KMS Key"
+  type        = string
+  default     = ""
+}
+
+variable "kms_user_account_id" {
+  description = "AWS account ID for KMS user"
+  type        = string
+  default     = ""
+}

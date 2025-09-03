@@ -2,7 +2,7 @@
 # VPC
 # ***************************************
 module "vpc" {
-  source = "./modules/vpc"
+  source = "../modules/vpc"
 
   # AWS
   availability_zones = var.aws_availability_zones
@@ -30,7 +30,7 @@ module "vpc" {
 # EKS
 # ***************************************
 module "eks" {
-  source = "./modules/eks"
+  source = "../modules/eks"
 
   # VPC
   vpc_id                 = module.vpc.vpc_id
@@ -79,7 +79,7 @@ module "eks" {
 # KMS (for Ethereum keypair)
 # ***************************************
 module "kms_eth" {
-  source = "./modules/kms_eth"
+  source = "../modules/kms_eth"
 
   # KMS config
   kms_eth_description              = var.kms_eth_description
@@ -101,7 +101,7 @@ module "kms_eth" {
 # K8s deps
 # ***************************************
 module "k8s_deps" {
-  source = "./modules/k8s_deps"
+  source = "../modules/k8s_deps"
 
   aws_region        = var.aws_region
   vpc_id            = module.vpc.vpc_id
