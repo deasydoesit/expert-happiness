@@ -14,6 +14,9 @@ spec:
     metadata:
       labels:
         app: eth-kms-signer
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "3000"
     spec:
       serviceAccountName: ethereum-signer
       containers:
@@ -66,16 +69,7 @@ spec:
                 name: eth-kms-signer
                 port:
                   number: 80
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: eth-kms-signer
-  namespace: ethereum
-  labels:
-    app: eth-kms-signer
-    component: metrics
-spec:
+
   selector:
     matchLabels:
       app: eth-kms-signer
