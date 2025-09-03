@@ -37,18 +37,6 @@ variable "kms_eth_tags" {
   default     = {}
 }
 
-variable "eth_signer_service_account_namespace" {
-  description = "K8s namespace for ethereum signer pod"
-  type        = string
-  default     = "ethereum"
-}
-
-variable "eth_signer_service_account_name" {
-  description = "K8s namespace for ethereum signer pod"
-  type        = string
-  default     = "ethereum-signer"
-}
-
 variable "for_key_creater_account" {
   description = "Is the module used in key user account?"
   type        = bool

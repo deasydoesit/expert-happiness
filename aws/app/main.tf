@@ -2,7 +2,7 @@
 # VPC
 # ***************************************
 module "vpc" {
-  source = "./modules/vpc"
+  source = "../modules/vpc"
 
   # AWS
   availability_zones = var.aws_availability_zones
@@ -30,7 +30,7 @@ module "vpc" {
 # EKS
 # ***************************************
 module "eks" {
-  source = "./modules/eks"
+  source = "../modules/eks"
 
   # VPC
   vpc_id                 = module.vpc.vpc_id
@@ -79,29 +79,23 @@ module "eks" {
 # KMS (for Ethereum keypair)
 # ***************************************
 module "kms_eth" {
-  source = "./modules/kms_eth"
+  source = "../modules/kms_eth"
 
-  # KMS config
-  kms_eth_description              = var.kms_eth_description
-  kms_eth_multi_region             = var.kms_eth_multi_region
-  kms_eth_key_usage                = var.kms_eth_key_usage
-  kms_eth_customer_master_key_spec = var.kms_eth_customer_master_key_spec
-  kms_eth_alias_name               = var.kms_eth_alias_name
+  # Cross Account
+  for_key_user_account = var.for_key_user_account
+  kms_arn              = var.kms_arn
 
   # IAM
   eth_signer_service_account_namespace = var.eth_signer_service_account_namespace
   eth_signer_service_account_name      = var.eth_signer_service_account_name
   oidc_provider                        = module.eks.oidc_provider
-
-  # Tags
-  kms_eth_tags = var.kms_eth_tags
 }
 
 # ***************************************
 # K8s deps
 # ***************************************
 module "k8s_deps" {
-  source = "./modules/k8s_deps"
+  source = "../modules/k8s_deps"
 
   aws_region        = var.aws_region
   vpc_id            = module.vpc.vpc_id
