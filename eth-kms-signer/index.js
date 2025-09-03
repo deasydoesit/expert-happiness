@@ -5,6 +5,7 @@ const { KMSClient } = require("@aws-sdk/client-kms");
 const { KMSSigner } = require('@rumblefishdev/eth-signer-kms');
 const { ethers } = require('ethers');
 const metricsPlugin = require('fastify-metrics');
+const path = require('path');
 
 const fastify = Fastify({ logger: true });
 const kms = new KMSClient({ region: process.env.AWS_REGION });
@@ -13,6 +14,11 @@ const provider = new ethers.JsonRpcProvider(process.env.ETH_RPC_URL);
 
 (async () => {
   await fastify.register(metricsPlugin, { endpoint: '/metrics' });
+
+  await fastify.register(require('@fastify/static'), {
+    root: path.join(__dirname, 'public'),
+    prefix: '/',
+  });
 
   // POST /send?address=<recipient>
   fastify.post('/send', async (request, reply) => {
@@ -41,6 +47,7 @@ const provider = new ethers.JsonRpcProvider(process.env.ETH_RPC_URL);
         from: sender,
         to: address,
         hash: tx.hash,
+        etherscanUrl: `https://sepolia.etherscan.io/tx/${tx.hash}`,
         status: 'Transaction sent and confirmed',
       });
     } catch (err) {
