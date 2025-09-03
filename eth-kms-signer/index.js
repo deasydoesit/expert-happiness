@@ -36,7 +36,7 @@ const provider = new ethers.JsonRpcProvider(process.env.ETH_RPC_URL);
 
       const tx = await signer.sendTransaction({
         to: address,
-        value: ethers.parseEther("0.0001"),
+        value: ethers.parseEther(process.env.ETH_AMOUNT),
       });
 
       console.log("TX sent:", tx.hash);

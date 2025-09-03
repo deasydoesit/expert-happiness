@@ -51,6 +51,10 @@
             font-weight: 600;
         }
 
+        h3 {
+            text-align: center;
+        }
+
         .wallet-info {
             background: #f8f9fa;
             border: 2px solid #e9ecef;
@@ -192,7 +196,6 @@
         }
 
         .wallet-header {
-            display: flex;
             align-items: center;
             justify-content: space-between;
         }
@@ -205,7 +208,6 @@
         <div class="wallet-info">
             <div class="wallet-header">
                 <h3>KMS Wallet Address</h3>
-                <button class="btn refresh-btn" onclick="loadWalletAddress()">Refresh</button>
             </div>
             <div class="wallet-address" id="walletAddress">Loading...</div>
         </div>
