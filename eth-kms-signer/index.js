@@ -4,6 +4,7 @@ const Fastify = require('fastify');
 const { KMSClient } = require("@aws-sdk/client-kms");
 const { KMSSigner } = require('@rumblefishdev/eth-signer-kms');
 const { ethers } = require('ethers');
+const metricsPlugin = require('fastify-metrics');
 
 const fastify = Fastify({ logger: true });
 const kms = new KMSClient({ region: process.env.AWS_REGION });
@@ -57,6 +58,7 @@ fastify.get('/wallet', async (request, reply) => {
 
 const start = async () => {
   try {
+    await fastify.register(metricsPlugin, { endpoint: '/metrics' });
     await fastify.listen({ port: 3000, host: '0.0.0.0' });
     console.log('Server listening on http://localhost:3000');
   } catch (err) {
