@@ -21,12 +21,14 @@ spec:
       serviceAccountName: ethereum-signer
       containers:
         - name: eth-kms-signer
-          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:852576ecf58889ecf65a83c0a3600a02b39266a0-13
+          image: 702245384093.dkr.ecr.us-east-1.amazonaws.com/eth-kms-signer:51e4ff7bbdcee0d7165b81306e5594667c0fe4bd-14
           env:
             - name: KMS_KEY_ID
               value: 785b7304-5e27-439c-b2ae-971392db5ec2
             - name: AWS_REGION
               value: us-east-1
+            - name: ETH_AMOUNT
+              value: '0.05'
             - name: ETH_RPC_URL
               value: https://sepolia.drpc.org
 ---
