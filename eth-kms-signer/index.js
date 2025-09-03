@@ -61,8 +61,7 @@ const provider = new ethers.JsonRpcProvider(process.env.ETH_RPC_URL);
   });
 
   try {
-    await Promise.all([fastify.listen({ port: 3000 }), fastify.ready()]);
-    console.log('Server listening on http://localhost:3000');
+    await Promise.all([fastify.listen({ port: 3000, host: '0.0.0.0' })]);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
