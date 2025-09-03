@@ -1,5 +1,5 @@
 # ***************************************
-# KMS
+# KMS (for Ethereum keypair)
 # ***************************************
 variable "kms_eth_description" {
   description = "The description of the KMS key"
@@ -25,46 +25,19 @@ variable "kms_eth_multi_region" {
   default     = false
 }
 
-variable "kms_eth_tags" {
-  description = "A map of tags to assign to the KMS key"
-  type        = map(string)
-  default     = {}
-}
-
 variable "kms_eth_alias_name" {
   description = "The display name of the alias. Must start with 'alias/'"
   type        = string
   default     = "alias/ethereum-keypair"
 }
 
-# ***************************************
-# IAM
-# ***************************************
-variable "eth_signer_service_account_namespace" {
-  description = "K8s namespace for ethereum signer pod"
-  type        = string
-  default     = "secure"
-}
-
-variable "eth_signer_service_account_name" {
-  description = "K8s namespace for ethereum signer pod"
-  type        = string
-  default     = "ethereum-signer"
-}
-
-variable "oidc_provider" {
-  description = "The OpenID Connect identity provider (issuer URL without leading `https://`)"
-  type        = string
-  default     = ""
+variable "kms_eth_tags" {
+  description = "A map of tags to assign to the KMS key"
+  type        = map(string)
+  default     = {}
 }
 
 variable "for_key_creater_account" {
-  description = "Is the module used in key creater account?"
-  type        = bool
-  default     = false
-}
-
-variable "for_key_user_account" {
   description = "Is the module used in key user account?"
   type        = bool
   default     = false
@@ -78,6 +51,12 @@ variable "kms_arn" {
 
 variable "kms_user_account_id" {
   description = "AWS account ID for KMS user"
+  type        = string
+  default     = ""
+}
+
+variable "aws_region" {
+  description = "Region of AWS account"
   type        = string
   default     = ""
 }
