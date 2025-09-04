@@ -6,7 +6,7 @@ module "kms_eth" {
 
   # Cross Account
   for_key_creater_account = var.for_key_creater_account
-  kms_user_account_id     = var.kms_user_account_id
+  kms_user_arn            = var.kms_user_arn
 
   # KMS config
   kms_eth_description              = var.kms_eth_description

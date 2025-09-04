@@ -76,8 +76,8 @@ variable "kms_arn" {
   default     = ""
 }
 
-variable "kms_user_account_id" {
-  description = "AWS account ID for KMS user"
+variable "kms_user_arn" {
+  description = "ARN for KMS user"
   type        = string
   default     = ""
 }

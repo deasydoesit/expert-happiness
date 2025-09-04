@@ -55,7 +55,7 @@ resource "aws_kms_key" "this" {
         Sid    = "Allow cross-account use of key"
         Effect = "Allow"
         Principal = {
-          AWS = "arn:aws:iam::${var.kms_user_account_id}:root"
+          AWS = var.kms_user_arn
         }
         Action = [
           "kms:DescribeKey",
